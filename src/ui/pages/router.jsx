@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 // eslint-disable-next-line no-unused-vars
 import { Navigate } from 'react-router-dom'; // Import Navigate for redirection
+import MainPage from "./MainPage";
+import Layout from "./Layout";
 
 
 
@@ -20,11 +22,11 @@ function DummyPage() {
 const AppRouter = createBrowserRouter([
   {
     path: "/", 
-    element: <DummyPage />,
+    element: <Layout />,
     children: [
       {
         index: true, 
-        element: <DummyPage />,
+        element: <MainPage />,
       },
       {
         path: "hola",
