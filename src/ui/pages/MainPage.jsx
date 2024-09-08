@@ -1,10 +1,12 @@
 import { Grid } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
+import QuestionForm from "../components/QuestionForm";
 
 
 
 function MainPage() {
 
+    // eslint-disable-next-line no-unused-vars
     const [time, setTime] = useState("");
 
 
@@ -26,11 +28,13 @@ function MainPage() {
 
 
     <>
-    <Grid container justifyContent="center" alignItems="center" style={{ minHeight: '100vh', backgroundColor: '#0053B1' }}>
+    <Grid container style={{ minHeight: '100vh' }}>
 
-        <p>
+        {/* <p>
          {time}
-        </p>
+        </p> */}
+
+        <QuestionForm />
 
 
 
