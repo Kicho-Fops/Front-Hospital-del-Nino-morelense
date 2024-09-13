@@ -62,7 +62,7 @@ function QuestionForm() {
       borderRadius="3xl"
       borderWidth="3px"
       borderColor={"gray.200"}
-      bg="tomato"
+      //bg="tomato"
       w="90%"
       h="90%"
       p={4}
