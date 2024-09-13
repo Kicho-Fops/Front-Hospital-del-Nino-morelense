@@ -1,5 +1,5 @@
 import { Box, Input, Text } from "@chakra-ui/react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 function CustomTextBox({ title, example, required, name, value, onChange }) {
   return (
