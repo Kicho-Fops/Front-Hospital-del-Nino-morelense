@@ -1,4 +1,3 @@
-
 import {
   AlertDialog,
   AlertDialogBody,
@@ -9,6 +8,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useState, useRef } from "react";
+import PropTypes from "prop-types";
 
 // Hook personalizado para manejar el diálogo de confirmación
 function useConfirmationDialog() {
@@ -52,5 +52,20 @@ function ConfirmationDialog({ isOpen, onClose, onConfirm, title, message }) {
   );
 }
 
-export { useConfirmationDialog, ConfirmationDialog };
+ConfirmationDialog.defaultProps = {
+  isOpen: false,
+  onClose: () => {},
+  onConfirm: () => {},
+  title: "",
+  message: "",
+};
 
+ConfirmationDialog.propTypes = {
+  isOpen: PropTypes.bool,
+  onClose: PropTypes.func,
+  onConfirm: PropTypes.func,
+  title: PropTypes.string,
+  message: PropTypes.string,
+};
+
+export { useConfirmationDialog, ConfirmationDialog };
