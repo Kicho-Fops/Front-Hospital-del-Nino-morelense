@@ -12,6 +12,14 @@ import {
   import { useState } from "react";
   import CustomTextBox from "./CustomTextBox";
   
+
+      //TODO
+
+    // Cuando haces la ventana mas pequeña, el boton se sale del box
+    // Diseño de telefono e implementar diseño de telefono (posiblemente lo hagamos en otro archivo)
+    // Validar todos los campos para que se habilite el boton de enviar
+
+
   function QuestionForm() {
     const [formData, setFormData] = useState({
       quienReporta: "",
