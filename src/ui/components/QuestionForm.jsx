@@ -23,20 +23,60 @@ function QuestionForm() {
     motivoReporte: "",
   });
 
+
+
   const { isOpen, openDialog, closeDialog } = useConfirmationDialog(); // Usamos el hook
   const toast = useToast();  // Inicializamos el hook de useToast 
+
 
   // Función para confirmar y enviar el formulario
   const handleConfirm = () => {
     console.log("El formulario ha sido enviado!");
     
+    console.log(formData);
+
+    fetch(`http://localhost:8080/api/ticket/create`, { // Cambiamos la URL a donde este la API de prueba
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        reportingUser: formData.quienReporta,
+        reportArea: formData.areaReporte,
+        extention: formData.extension,
+        typeOfEquipment: formData.tipoEquipo,
+        equipmentDescription: formData.descripcionEquipo,
+        motive: formData.motivoReporte,
+        PCDate: new Date().toISOString(),
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.ok;
+      })
+      .then(() => {
+        // Handle the response data if needed
+        toast({
+          title: "Envío exitoso",
+          description: "El reporte ha sido enviado correctamente.",
+          duration: 5000,  // Duración en milisegundos
+          isClosable: true,
+        });
+      })
+      .catch(() => {
+        // Handle errors if the request fails
+        toast({
+          title: "Error de envio",
+          description: "El reporte ha tenido un error.",
+          duration: 10000,  // Duración en milisegundos
+          isClosable: false,
+        });
+      });
+
     // Mostramos una notificación de éxito después de enviar el formulario
-    toast({
-      title: "Envío exitoso",
-      description: "El reporte ha sido enviado correctamente.",
-      duration: 5000,  // Duración en milisegundos
-      isClosable: true,
-    });
+    
 
     closeDialog();  
   };
@@ -97,6 +137,7 @@ function QuestionForm() {
               name="quienReporta"
               value={formData.quienReporta}
               onChange={handleInputChange}
+              on
             />
           </GridItem>
 
