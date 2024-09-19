@@ -7,11 +7,15 @@ import {
   Text,
   Textarea,
   Button,
-  useToast,  // Importamos useToast
+  useToast,
+  VStack, // Importamos useToast
 } from "@chakra-ui/react";
 import { useState } from "react";
 import CustomTextBox from "./CustomTextBox";
-import { useConfirmationDialog, ConfirmationDialog } from "./ConfirmationDialog";  // Importamos ambos
+import {
+  useConfirmationDialog,
+  ConfirmationDialog,
+} from "./ConfirmationDialog"; // Importamos ambos
 
 function QuestionForm() {
   const [formData, setFormData] = useState({
@@ -23,19 +27,17 @@ function QuestionForm() {
     motivoReporte: "",
   });
 
-
-
   const { isOpen, openDialog, closeDialog } = useConfirmationDialog(); // Usamos el hook
-  const toast = useToast();  // Inicializamos el hook de useToast 
-
+  const toast = useToast(); // Inicializamos el hook de useToast
 
   // Función para confirmar y enviar el formulario
   const handleConfirm = () => {
     console.log("El formulario ha sido enviado!");
-    
+
     console.log(formData);
 
-    fetch(`http://localhost:8080/api/ticket/create`, { // Cambiamos la URL a donde este la API de prueba
+    fetch(`http://localhost:8080/api/ticket/create`, {
+      // Cambiamos la URL a donde este la API de prueba
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -61,7 +63,7 @@ function QuestionForm() {
         toast({
           title: "Envío exitoso",
           description: "El reporte ha sido enviado correctamente.",
-          duration: 5000,  // Duración en milisegundos
+          duration: 5000, // Duración en milisegundos
           isClosable: true,
         });
       })
@@ -70,15 +72,14 @@ function QuestionForm() {
         toast({
           title: "Error de envio",
           description: "El reporte ha tenido un error.",
-          duration: 10000,  // Duración en milisegundos
+          duration: 10000, // Duración en milisegundos
           isClosable: false,
         });
       });
 
     // Mostramos una notificación de éxito después de enviar el formulario
-    
 
-    closeDialog();  
+    closeDialog();
   };
 
   const handleInputChange = (event) => {
@@ -105,7 +106,8 @@ function QuestionForm() {
     formData.tipoEquipo !== "" &&
     formData.tipoEquipo !== "Tipo de equipo a revisar" &&
     formData.motivoReporte.trim() !== "" &&
-    (formData.tipoEquipo !== "Otro" || formData.descripcionEquipo.trim() !== "");
+    (formData.tipoEquipo !== "Otro" ||
+      formData.descripcionEquipo.trim() !== "");
 
   return (
     <>
@@ -113,9 +115,8 @@ function QuestionForm() {
         borderRadius="3xl"
         borderWidth="3px"
         borderColor={"gray.200"}
-        //bg="tomato"
-        w="90%"
-        h="90%"
+        w={{ base: "100%", md: "90%" }} // Full width on mobile, 90% on larger screens
+        h={{ base: "90%", md: "90%" }}
         p={4}
         color="white"
         justifyContent="center"
@@ -125,11 +126,16 @@ function QuestionForm() {
         padding={10}
       >
         <Grid
-          templateColumns="repeat(3, 2fr)"
+          templateColumns={{ base: "1fr", md: "repeat(3, 2fr)" }} // Stack items in 1 column on mobile, grid with 3 columns on larger screens
           templateRows="repeat(1, 1fr)"
-          gap={150}
+          gap={{ base: 20, md: 150 }} // Adjust gap for mobile and larger screens
         >
-          <GridItem w="100%" h="10" color={"black"} colSpan={1}>
+          <GridItem
+            w="100%"
+            h="10"
+            color={"black"}
+            colSpan={{ base: 1, md: 1 }}
+          >
             <CustomTextBox
               title="Quien reporta"
               example="Ejemplo: Sergio"
@@ -137,11 +143,15 @@ function QuestionForm() {
               name="quienReporta"
               value={formData.quienReporta}
               onChange={handleInputChange}
-              on
             />
           </GridItem>
 
-          <GridItem w="100%" h="10" color={"black"} colSpan={1}>
+          <GridItem
+            w="100%"
+            h="10"
+            color={"black"}
+            colSpan={{ base: 1, md: 1 }}
+          >
             <CustomTextBox
               title="Área de reporte"
               example="Ejemplo: Vigilancia Hospital"
@@ -152,7 +162,12 @@ function QuestionForm() {
             />
           </GridItem>
 
-          <GridItem w="100%" h="10" color={"black"} colSpan={1}>
+          <GridItem
+            w="100%"
+            h="10"
+            color={"black"}
+            colSpan={{ base: 1, md: 1 }}
+          >
             <CustomTextBox
               title="Extensión"
               example="Ejemplo: Extensión"
@@ -163,14 +178,19 @@ function QuestionForm() {
             />
           </GridItem>
 
-          <GridItem w="100%" h="5" color={"black"} colSpan={1}>
+          <GridItem w="100%" h="5" color={"black"} colSpan={{ base: 1, md: 1 }}>
             <Select
               placeholder="Tipo de equipo a revisar"
               variant="filled"
               value={formData.tipoEquipo}
               onChange={handleSelectChange}
             >
-              <option value="Tipo de equipo a revisar" style={{ display: 'none' }}>Tipo de equipo a revisar</option>
+              <option
+                value="Tipo de equipo a revisar"
+                style={{ display: "none" }}
+              >
+                Tipo de equipo a revisar
+              </option>
               <option value="PC">PC</option>
               <option value="PC/Todo en uno">PC/Todo en uno</option>
               <option value="Laptop">Laptop</option>
@@ -182,7 +202,7 @@ function QuestionForm() {
             </Select>
           </GridItem>
 
-          <GridItem w="100%" h="5" color={"black"} colSpan={2}>
+          <GridItem w="100%" h="5" color={"black"} colSpan={{ base: 1, md: 2 }}>
             <Input
               placeholder="Ejemplo: Teclado KU-0138"
               variant="filled"
@@ -194,7 +214,12 @@ function QuestionForm() {
             />
           </GridItem>
 
-          <GridItem w="100%" h="10" color={"black"} colSpan={3}>
+          <GridItem
+            w="100%"
+            h="10"
+            color={"black"}
+            colSpan={{ base: 1, md: 3 }}
+          >
             <Box display="flex" alignItems="center">
               <Text fontSize="xl" marginLeft={3}>
                 Motivo del reporte
@@ -218,12 +243,18 @@ function QuestionForm() {
             w="100%"
             h="10"
             color={"black"}
-            colSpan={3}
+            colSpan={{ base: 1, md: 3 }}
             display="flex"
             justifyContent="center"
-            marginTop={200}
+            marginTop={{ base: 20, md: 200 }} // More margin on mobile to push it down
+            padding={{ base: 200, md: 0 }} // Add padding on mobile
           >
-            <Button colorScheme="blue" size="lg" isDisabled={!isFormComplete} onClick={openDialog}>
+            <Button
+              colorScheme="blue"
+              size="lg"
+              isDisabled={!isFormComplete}
+              onClick={openDialog}
+            >
               Enviar
             </Button>
           </GridItem>
@@ -242,4 +273,3 @@ function QuestionForm() {
 }
 
 export default QuestionForm;
-
