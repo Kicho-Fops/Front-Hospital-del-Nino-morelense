@@ -33,7 +33,7 @@ function QuestionForm() {
   const handleConfirm = () => {
     console.log("El formulario ha sido enviado!");
 
-    console.log(formData);
+    //console.log(formData);
 
     fetch(`http://localhost:8080/api/ticket/create`, {
       // Cambiamos la URL a donde este la API de prueba
