@@ -148,7 +148,7 @@ function QuestionForm() {
         >
           <GridItem
             w="100%"
-            h="10"
+            h="0"
             color={"black"}
             colSpan={{ base: 1, md: 1 }}
           >
@@ -164,10 +164,10 @@ function QuestionForm() {
 
           <GridItem
             w="100%"
-            h="10"
+            h="0"
             color={"black"}
             colSpan={{ base: 1, md: 1 }}
-            marginTop={{ base: 0, md: 10 }} // More margin on mobile to push it down
+            marginTop={{ base: 10, md: 10 }} // More margin on mobile to push it down
           >
             <Select
               placeholder="Área de reporte"
@@ -219,7 +219,7 @@ function QuestionForm() {
             />
           </GridItem>
 
-          <GridItem w="100%" h="5" color={"black"} colSpan={{ base: 1, md: 1 }} mt="-20">
+          <GridItem w="100%" h="1" color={"black"} colSpan={{ base: 1, md: 1 }}>
             <Select
               placeholder="Tipo de equipo a revisar"
               variant="filled"
@@ -243,7 +243,7 @@ function QuestionForm() {
             </Select>
           </GridItem>
 
-          <GridItem w="100%" h="5" color={"black"} colSpan={{ base: 1, md: 2 }} mt="-20">
+          <GridItem w="100%" h="20" color={"black"} colSpan={{ base: 1, md: 2 }} >
             <Input
               placeholder="Ejemplo: Teclado KU-0138"
               variant="filled"
@@ -260,7 +260,7 @@ function QuestionForm() {
             h="10"
             color={"black"}
             colSpan={{ base: 1, md: 3 }}
-            mt="-40"
+            mt="-20"
           >
             <Box display="flex" alignItems="center">
               <Text fontSize="xl" marginLeft={3}>
@@ -288,8 +288,8 @@ function QuestionForm() {
             colSpan={{ base: 1, md: 3 }}
             display="flex"
             justifyContent="center"
-            marginTop={{ base: 20, md: 42 }} // More margin on mobile to push it down
-            padding={{ base: 20, md: 0 }} // Add padding on mobile
+            marginTop={{ base: 49, md: 42 }} // More margin on mobile to push it down
+            padding={{ base: 150, md: 100 }} // Add padding on mobile
           >
             <Button
               colorScheme="blue"
