@@ -2,7 +2,6 @@ import {
   Box,
   Grid,
   GridItem,
-  Select,
   Input,
   Text,
   Textarea,
@@ -16,6 +15,7 @@ import {
   ConfirmationDialog,
 } from "./ConfirmationDialog"; // Importamos ambos
 import CustomSelect from "./CustomSelect";
+import { LISTA_COMBINADA } from "../providers/listProvider";
 
 function QuestionForm() {
   const [formData, setFormData] = useState({
@@ -108,12 +108,29 @@ function QuestionForm() {
   };
 
   const handleSelectChangeArea = (event) => {
-    const { value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      areaReporte: value,
-    }));
-  };
+    const { value } = event.target; // This is the selected position
+    console.log(value);
+
+    // Find the corresponding value based on selected text
+    const foundItem = LISTA_COMBINADA.find(item => item.text === value);
+    
+    // If found, extract the number and update formData
+    if (foundItem) {
+      const [area, extension] = foundItem.value.split(' - '); // Separate into area and extension
+      setFormData((prevData) => ({
+          ...prevData,
+          areaReporte: area, // Store the area
+          extension: extension // Store the extension
+        }));
+    } else {
+        // Optionally handle the case where the item is not found
+        setFormData((prevData) => ({
+            ...prevData,
+            selectedValue: '' // Clear the value if not found
+        }));
+    }
+};
+
 
   const isFormComplete =
     formData.quienReporta.trim() !== "" &&
@@ -166,7 +183,7 @@ function QuestionForm() {
             w="100%"
             h="0"
             color={"black"}
-            colSpan={{ base: 1, md: 1 }}
+            colSpan={{ base: 1, md: 2 }}
             marginTop={{ base: 10, md: 10 }} // More margin on mobile to push it down
           >
             <CustomSelect
@@ -174,64 +191,28 @@ function QuestionForm() {
               variant={"filled"}
               value={formData.areaReporte}
               onChange={handleSelectChangeArea}
-              options={[
-                "ARCHIVO - PRIMER PISO",
-                "CONSULTA EXTERNA - PRIMER PISO",
-                "DIRECCIÓN OPERATIVA - PLANTA BAJA",
-                "FINANCIEROS - PLANTA BAJA",
-                "IMAGENOLOGIA - PLANTA BAJA",
-                "INFORMÁTICA - PLANTA BAJA",
-                "INFORMÁTICA Y ESTADÍSTICA - PLANTA BAJA",
-                "ONCOLOGIA - SEGUNDO PISO",
-                "PASILLO DE CG - SEGUNDO PISO",
-                "PASILLO DEL LOBBY - PLANTA BAJA",
-                "PATOLOGÍA - SÓTANO",
-                "RECURSOS MATERIALES - SÓTANO",
-                "TRABAJO SOCIAL - SEGUNDO PISO",
-                "UCIN - SÓTANO",
-                "URGENCIAS - PLANTA BAJA",
-              ]}
-            />
-          </GridItem>
-
-          <GridItem
-            w="100%"
-            h="10"
-            color={"black"}
-            colSpan={{ base: 1, md: 1 }}
-          >
-            <CustomTextBox
-              title="Extensión"
-              example="Ejemplo: Extensión"
-              required={true}
-              name="extension"
-              value={formData.extension}
-              onChange={handleInputChange}
+              options={LISTA_COMBINADA}
             />
           </GridItem>
 
           <GridItem w="100%" h="1" color={"black"} colSpan={{ base: 1, md: 1 }}>
-            <Select
-              placeholder="Tipo de equipo a revisar"
-              variant="filled"
+            
+          <CustomSelect
+              placeholder={"Tipo de equipo a revisar"}
+              variant={"filled"}
               value={formData.tipoEquipo}
               onChange={handleSelectChangeComputer}
-            >
-              <option
-                value="Tipo de equipo a revisar"
-                style={{ display: "none" }}
-              >
-                Tipo de equipo a revisar
-              </option>
-              <option value="PC">PC</option>
-              <option value="PC/Todo en uno">PC/Todo en uno</option>
-              <option value="Laptop">Laptop</option>
-              <option value="Terminal">Terminal</option>
-              <option value="Impresora">Impresora</option>
-              <option value="Escáner">Escáner</option>
-              <option value="Multifuncional">Multifuncional</option>
-              <option value="Otro">Otro</option>
-            </Select>
+              options={[{ value: "Tipo de equipo a revisar", hidden: true, text: "Tipo de equipo a revisar" },
+              { value: "PC", text: "PC" },
+              { value: "PC/Todo en uno", text: "PC/Todo en uno" },
+              { value: "Laptop", text: "Laptop" },
+              { value: "Terminal", text: "Terminal" },
+              { value: "Impresora", text: "Impresora" },
+              { value: "Escáner", text: "Escáner" },
+              { value: "Multifuncional", text: "Multifuncional" },
+              { value: "Otro", text: "Otro" }]}
+            />
+            
           </GridItem>
 
           <GridItem w="100%" h="20" color={"black"} colSpan={{ base: 1, md: 2 }} >
