@@ -15,6 +15,7 @@ import {
   useConfirmationDialog,
   ConfirmationDialog,
 } from "./ConfirmationDialog"; // Importamos ambos
+import CustomSelect from "./CustomSelect";
 
 function QuestionForm() {
   const [formData, setFormData] = useState({
@@ -35,7 +36,7 @@ function QuestionForm() {
 
     //console.log(formData);
 
-    fetch(`http://localhost:8080/api/ticket/create`, {
+    fetch(`http://hosp-nino.servidoreselruso.com:8080/api/ticket/public/create`, {
       // Cambiamos la URL a donde este la API de prueba
       method: "POST",
       headers: {
@@ -106,7 +107,6 @@ function QuestionForm() {
     }));
   };
 
-
   const isFormComplete =
     formData.quienReporta.trim() !== "" &&
     formData.areaReporte.trim() !== "" &&
@@ -161,38 +161,29 @@ function QuestionForm() {
             colSpan={{ base: 1, md: 1 }}
             marginTop={{ base: 0, md: 10 }} // More margin on mobile to push it down
           >
-            <Select
-              placeholder="Área de reporte"
-              variant="filled"
+            <CustomSelect
+              placeholder={"Área de reporte"}
+              variant={"filled"}
               value={formData.areaReporte}
               onChange={handleSelectChangeArea}
-            >
-              <option
-                value="Tipo de equipo a revisar"
-                style={{ display: "none" }}
-              >
-                Tipo de equipo a revisar
-              </option>
-              <option value="ARCHIVO - PRIMER PISO">ARCHIVO - PRIMER PISO</option>
-              <option value="CONSULTA EXTERNA - PRIMER PISO">
-                CONSULTA EXTERNA - PRIMER PISO
-              </option>
-              <option value="DIRECCIÓN OPERATIVA - PLANTA BAJA">DIRECCIÓN OPERATIVA - PLANTA BAJA</option>
-              <option value="FINANCIEROS - PLANTA BAJA">FINANCIEROS - PLANTA BAJA</option>
-              <option value="IMAGENOLOGIA - PLANTA BAJA">IMAGENOLOGIA - PLANTA BAJA</option>
-              <option value="INFORMÁTICA - PLANTA BAJA">INFORMÁTICA - PLANTA BAJA</option>
-              <option value="INFORMÁTICA Y ESTADÍSTICA - PLANTA BAJA">
-                INFORMÁTICA Y ESTADÍSTICA - PLANTA BAJA
-              </option>
-              <option value="ONCOLOGIA - SEGUNDO PISO">ONCOLOGIA - SEGUNDO PISO</option>
-              <option value="PASILLO DE CG - SEGUNDO PISO">PASILLO DE CG - SEGUNDO PISO</option>
-              <option value="PASILLO DEL LOBBY - PLANTA BAJA">PASILLO DEL LOBBY - PLANTA BAJA</option>
-              <option value="PATOLOGÍA - SÓTANO">PATOLOGÍA - SÓTANO</option>
-              <option value="RECURSOS MATERIALES - SÓTANO">RECURSOS MATERIALES - SÓTANO</option>
-              <option value="TRABAJO SOCIAL - SEGUNDO PISO">TRABAJO SOCIAL - SEGUNDO PISO</option>
-              <option value="UCIN - SÓTANO">UCIN - SÓTANO</option>
-              <option value="URGENCIAS - PLANTA BAJA">URGENCIAS - PLANTA BAJA</option>
-            </Select>
+              options={[
+                "ARCHIVO - PRIMER PISO",
+                "CONSULTA EXTERNA - PRIMER PISO",
+                "DIRECCIÓN OPERATIVA - PLANTA BAJA",
+                "FINANCIEROS - PLANTA BAJA",
+                "IMAGENOLOGIA - PLANTA BAJA",
+                "INFORMÁTICA - PLANTA BAJA",
+                "INFORMÁTICA Y ESTADÍSTICA - PLANTA BAJA",
+                "ONCOLOGIA - SEGUNDO PISO",
+                "PASILLO DE CG - SEGUNDO PISO",
+                "PASILLO DEL LOBBY - PLANTA BAJA",
+                "PATOLOGÍA - SÓTANO",
+                "RECURSOS MATERIALES - SÓTANO",
+                "TRABAJO SOCIAL - SEGUNDO PISO",
+                "UCIN - SÓTANO",
+                "URGENCIAS - PLANTA BAJA",
+              ]}
+            />
           </GridItem>
 
           <GridItem
