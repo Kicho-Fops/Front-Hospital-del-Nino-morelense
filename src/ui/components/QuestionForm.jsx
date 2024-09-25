@@ -35,7 +35,7 @@ function QuestionForm() {
 
     //console.log(formData);
 
-    fetch(`http://localhost:8080/api/ticket/create`, {
+    fetch(`http://hosp-nino.servidoreselruso.com:8080/api/ticket/public/create`, {
       // Cambiamos la URL a donde este la API de prueba
       method: "POST",
       headers: {
@@ -48,7 +48,7 @@ function QuestionForm() {
         typeOfEquipment: formData.tipoEquipo,
         equipmentDescription: formData.descripcionEquipo,
         motive: formData.motivoReporte,
-        PCDate: new Date().toISOString(),
+        pcdate: new Date().toISOString(),
       }),
     })
       .then((response) => {
