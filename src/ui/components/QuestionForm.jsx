@@ -27,6 +27,8 @@ function QuestionForm() {
     motivoReporte: "",
   });
 
+  const [selectedValue, setSelectedValue] = useState(''); // Initialize the selected value
+
   const { isOpen, openDialog, closeDialog } = useConfirmationDialog(); // Usamos el hook
   const toast = useToast(); // Inicializamos el hook de useToast
 
@@ -52,6 +54,7 @@ function QuestionForm() {
         pcdate: new Date().toISOString(),
       }),
     })
+    
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -111,15 +114,20 @@ function QuestionForm() {
     const { value } = event.target; // This is the selected position
     console.log(value);
 
+    setSelectedValue(value); // Update the selected value
+
+
     // Find the corresponding value based on selected text
     const foundItem = LISTA_COMBINADA.find(item => item.text === value);
+
+    console.log(foundItem);
     
     // If found, extract the number and update formData
     if (foundItem) {
       const [area, extension] = foundItem.value.split(' - '); // Separate into area and extension
       setFormData((prevData) => ({
           ...prevData,
-          areaReporte: area, // Store the area
+          areaReporte: area, // Store the area  
           extension: extension // Store the extension
         }));
     } else {
@@ -189,7 +197,7 @@ function QuestionForm() {
             <CustomSelect
               placeholder={"Área de reporte"}
               variant={"filled"}
-              value={formData.areaReporte}
+              value={selectedValue}
               onChange={handleSelectChangeArea}
               options={LISTA_COMBINADA}
             />
