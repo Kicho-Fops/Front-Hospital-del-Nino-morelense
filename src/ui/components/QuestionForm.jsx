@@ -27,7 +27,7 @@ function QuestionForm() {
     motivoReporte: "",
   });
 
-  const [selectedValue, setSelectedValue] = useState(''); // Initialize the selected value
+  const [selectedValue, setSelectedValue] = useState(""); // Initialize the selected value
 
   const { isOpen, openDialog, closeDialog } = useConfirmationDialog(); // Usamos el hook
   const toast = useToast(); // Inicializamos el hook de useToast
@@ -38,23 +38,25 @@ function QuestionForm() {
 
     //console.log(formData);
 
-    fetch(`http://hosp-nino.servidoreselruso.com:8080/api/ticket/public/create`, {
-      // Cambiamos la URL a donde este la API de prueba
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        reportingUser: formData.quienReporta,
-        reportArea: formData.areaReporte,
-        extention: formData.extension,
-        typeOfEquipment: formData.tipoEquipo,
-        equipmentDescription: formData.descripcionEquipo,
-        motive: formData.motivoReporte,
-        pcdate: new Date().toISOString(),
-      }),
-    })
-    
+    fetch(
+      `http://hosp-nino.servidoreselruso.com:8080/api/ticket/public/create`,
+      {
+        // Cambiamos la URL a donde este la API de prueba
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          reportingUser: formData.quienReporta,
+          reportArea: formData.areaReporte,
+          extention: formData.extension,
+          typeOfEquipment: formData.tipoEquipo,
+          equipmentDescription: formData.descripcionEquipo,
+          motive: formData.motivoReporte,
+          pcdate: new Date().toISOString(),
+        }),
+      }
+    )
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -70,7 +72,7 @@ function QuestionForm() {
           isClosable: true,
           position: "top",
           containerStyle: {
-            marginTop: "300px",  // Ajusta el margen superior con px
+            marginTop: "300px", // Ajusta el margen superior con px
           },
         });
       })
@@ -83,7 +85,7 @@ function QuestionForm() {
           isClosable: false,
           position: "top",
           containerStyle: {
-            marginTop: "300px",  // Ajusta el margen superior con px
+            marginTop: "300px", // Ajusta el margen superior con px
           },
         });
       });
@@ -116,29 +118,27 @@ function QuestionForm() {
 
     setSelectedValue(value); // Update the selected value
 
-
     // Find the corresponding value based on selected text
-    const foundItem = LISTA_COMBINADA.find(item => item.text === value);
+    const foundItem = LISTA_COMBINADA.find((item) => item.text === value);
 
     console.log(foundItem);
-    
+
     // If found, extract the number and update formData
     if (foundItem) {
-      const [area, extension] = foundItem.value.split(' - '); // Separate into area and extension
+      const [area, extension] = foundItem.value.split(" - "); // Separate into area and extension
       setFormData((prevData) => ({
-          ...prevData,
-          areaReporte: area, // Store the area  
-          extension: extension // Store the extension
-        }));
+        ...prevData,
+        areaReporte: area, // Store the area
+        extension: extension, // Store the extension
+      }));
     } else {
-        // Optionally handle the case where the item is not found
-        setFormData((prevData) => ({
-            ...prevData,
-            selectedValue: '' // Clear the value if not found
-        }));
+      // Optionally handle the case where the item is not found
+      setFormData((prevData) => ({
+        ...prevData,
+        selectedValue: "", // Clear the value if not found
+      }));
     }
-};
-
+  };
 
   const isFormComplete =
     formData.quienReporta.trim() !== "" &&
@@ -166,17 +166,13 @@ function QuestionForm() {
         boxShadow="inset 0 5px 4px rgba(0.1, 0.1, 0.1, 0.3)"
         padding={10}
       >
+        
         <Grid
           templateColumns={{ base: "1fr", md: "repeat(3, 2fr)" }} // Stack items in 1 column on mobile, grid with 3 columns on larger screens
           templateRows="repeat(1, 1fr)"
           gap={{ base: 20, md: 150 }} // Adjust gap for mobile and larger screens
         >
-          <GridItem
-            w="100%"
-            h="0"
-            color={"black"}
-            colSpan={{ base: 1, md: 1 }}
-          >
+          <GridItem w="100%" h="0" color={"black"} colSpan={{ base: 1, md: 1 }}>
             <CustomTextBox
               title="Quien reporta"
               example="Ejemplo: Sergio"
@@ -204,26 +200,30 @@ function QuestionForm() {
           </GridItem>
 
           <GridItem w="100%" h="1" color={"black"} colSpan={{ base: 1, md: 1 }}>
-            
-          <CustomSelect
+            <CustomSelect
               placeholder={"Tipo de equipo a revisar"}
               variant={"filled"}
               value={formData.tipoEquipo}
               onChange={handleSelectChangeComputer}
-              options={[{ value: "Tipo de equipo a revisar", hidden: true, text: "Tipo de equipo a revisar" },
-              { value: "PC", text: "PC" },
-              { value: "PC/Todo en uno", text: "PC/Todo en uno" },
-              { value: "Laptop", text: "Laptop" },
-              { value: "Terminal", text: "Terminal" },
-              { value: "Impresora", text: "Impresora" },
-              { value: "Escáner", text: "Escáner" },
-              { value: "Multifuncional", text: "Multifuncional" },
-              { value: "Otro", text: "Otro" }]}
+              options={[
+                { value: "PC", text: "PC" },
+                { value: "PC/Todo en uno", text: "PC/Todo en uno" },
+                { value: "Laptop", text: "Laptop" },
+                { value: "Terminal", text: "Terminal" },
+                { value: "Impresora", text: "Impresora" },
+                { value: "Escáner", text: "Escáner" },
+                { value: "Multifuncional", text: "Multifuncional" },
+                { value: "Otro", text: "Otro" },
+              ]}
             />
-            
           </GridItem>
 
-          <GridItem w="100%" h="20" color={"black"} colSpan={{ base: 1, md: 2 }} >
+          <GridItem
+            w="100%"
+            h="20"
+            color={"black"}
+            colSpan={{ base: 1, md: 2 }}
+          >
             <Input
               placeholder="Ejemplo: Teclado KU-0138"
               variant="filled"
