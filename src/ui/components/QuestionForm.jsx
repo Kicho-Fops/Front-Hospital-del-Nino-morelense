@@ -15,6 +15,7 @@ import {
   ConfirmationDialog,
 } from "./ConfirmationDialog"; // Importamos ambos
 import CustomSelect from "./CustomSelect";
+import CustomSearch from "./CustomSearch";
 import { LISTA_COMBINADA } from "../providers/listProvider";
 
 function QuestionForm() {
@@ -28,6 +29,7 @@ function QuestionForm() {
   });
 
   const [selectedValue, setSelectedValue] = useState(""); // Initialize the selected value
+  const [searchTerm, setSearchTerm] = useState(""); // Initialize the search term state
 
   const { isOpen, openDialog, closeDialog } = useConfirmationDialog(); // Usamos el hook
   const toast = useToast(); // Inicializamos el hook de useToast
@@ -112,7 +114,7 @@ function QuestionForm() {
     }));
   };
 
-  const handleSelectChangeArea = (event) => {
+  const handleSearchChangeArea = (event) => {
     const { value } = event.target; // This is the selected position
     console.log(value);
 
@@ -120,6 +122,11 @@ function QuestionForm() {
 
     // Find the corresponding value based on selected text
     const foundItem = LISTA_COMBINADA.find((item) => item.text === value);
+
+    // Handle search input for "Área de reporte"
+    const handleSearchChangeArea = (value) => {
+      setSearchTerm(value); // Update the search term state
+    };
 
     console.log(foundItem);
 
@@ -166,7 +173,6 @@ function QuestionForm() {
         boxShadow="inset 0 5px 4px rgba(0.1, 0.1, 0.1, 0.3)"
         padding={10}
       >
-        
         <Grid
           templateColumns={{ base: "1fr", md: "repeat(3, 2fr)" }} // Stack items in 1 column on mobile, grid with 3 columns on larger screens
           templateRows="repeat(1, 1fr)"
@@ -190,12 +196,10 @@ function QuestionForm() {
             colSpan={{ base: 1, md: 2 }}
             marginTop={{ base: 10, md: 10 }} // More margin on mobile to push it down
           >
-            <CustomSelect
-              placeholder={"Área de reporte"}
-              variant={"filled"}
-              value={selectedValue}
-              onChange={handleSelectChangeArea}
-              options={LISTA_COMBINADA}
+            <CustomSearch
+              placeholder={"Buscar área de reporte"}
+              value={searchTerm}
+              onChange={handleSearchChangeArea} // Capture search input
             />
           </GridItem>
 
