@@ -6,7 +6,13 @@ import {
   Text,
   Textarea,
   Button,
-  useToast, // Importamos useToast
+  useToast,
+  InputGroup,
+  InputLeftElement,
+  InputRightAddon,
+  List,
+  ListItem,
+  Icon, // Importamos useToast
 } from "@chakra-ui/react";
 import { useState } from "react";
 import CustomTextBox from "./CustomTextBox";
@@ -17,6 +23,7 @@ import {
 import CustomSelect from "./CustomSelect";
 import CustomSearch from "./CustomSearch";
 import { LISTA_COMBINADA } from "../providers/listProvider";
+import { SearchIcon } from "@chakra-ui/icons";
 
 function QuestionForm() {
   const [formData, setFormData] = useState({
@@ -28,18 +35,58 @@ function QuestionForm() {
     motivoReporte: "",
   });
 
-  const [selectedValue, setSelectedValue] = useState(""); // Initialize the selected value
-  const [searchTerm, setSearchTerm] = useState(""); // Initialize the search term state
 
   const { isOpen, openDialog, closeDialog } = useConfirmationDialog(); // Usamos el hook
   const toast = useToast(); // Inicializamos el hook de useToast
+
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredList, setFilteredList] = useState([]);
+
+  // Function to handle search in real-time
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    setSearchTerm(value);
+
+    if (value === "") {
+      setFilteredList([]); // Clear the list when search box is empty
+    } else {
+      // Filter LISTA_COMBINADA based on the search term
+      const filteredItems = LISTA_COMBINADA.filter((item) =>
+        item.text.toLowerCase().includes(value.toLowerCase())
+      );
+      setFilteredList(filteredItems);
+      const [area, extension] = filteredItems[0].value.split(" - "); // Separate into area and extension
+      setFormData((prevData) => ({
+        ...prevData,
+        areaReporte: area, // Store the area
+        extension: extension, // Store the extension
+      }));
+    }
+  };
+
+  const handleNormalInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleItemSelect = (item) => {
+    console.log(item); // Handle item selection, like setting form values or other logic
+    setSearchTerm(item.text); // Set search term to selected item's text
+    setFilteredList([]); // Clear the list after selection
+  };
+
 
   // Función para confirmar y enviar el formulario
   const handleConfirm = () => {
     console.log("El formulario ha sido enviado!");
 
-    //console.log(formData);
+    console.log(formData);
 
+    
     fetch(
       `http://hosp-nino.servidoreselruso.com:8080/api/ticket/public/create`,
       {
@@ -97,13 +144,13 @@ function QuestionForm() {
     closeDialog();
   };
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  // const handleInputChange = (event) => {
+  //   const { name, value } = event.target;
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     [name]: value,
+  //   }));
+  // };
 
   const handleSelectChangeComputer = (event) => {
     const { value } = event.target;
@@ -114,19 +161,16 @@ function QuestionForm() {
     }));
   };
 
+
+
   const handleSearchChangeArea = (event) => {
-    const { value } = event.target; // This is the selected position
+    const { value } = event.target.value; // This is the selected position
     console.log(value);
 
     setSelectedValue(value); // Update the selected value
 
     // Find the corresponding value based on selected text
     const foundItem = LISTA_COMBINADA.find((item) => item.text === value);
-
-    // Handle search input for "Área de reporte"
-    const handleSearchChangeArea = (value) => {
-      setSearchTerm(value); // Update the search term state
-    };
 
     console.log(foundItem);
 
@@ -177,31 +221,61 @@ function QuestionForm() {
           templateColumns={{ base: "1fr", md: "repeat(3, 2fr)" }} // Stack items in 1 column on mobile, grid with 3 columns on larger screens
           templateRows="repeat(1, 1fr)"
           gap={{ base: 20, md: 150 }} // Adjust gap for mobile and larger screens
+          
         >
-          <GridItem w="100%" h="0" color={"black"} colSpan={{ base: 1, md: 1 }}>
+          <GridItem w="100%" h="0" color={"black"} colSpan={{ base: 1, md: 1 }} zIndex="1000">
             <CustomTextBox
               title="Quien reporta"
               example="Ejemplo: Sergio"
               required={true}
               name="quienReporta"
               value={formData.quienReporta}
-              onChange={handleInputChange}
+              onChange={handleNormalInputChange}
             />
           </GridItem>
 
           <GridItem
-            w="100%"
-            h="0"
-            color={"black"}
-            colSpan={{ base: 1, md: 2 }}
-            marginTop={{ base: 10, md: 10 }} // More margin on mobile to push it down
-          >
-            <CustomSearch
-              placeholder={"Buscar área de reporte"}
-              value={searchTerm}
-              onChange={handleSearchChangeArea} // Capture search input
-            />
-          </GridItem>
+        w="100%"
+        h="0"
+        color={"black"}
+        colSpan={{ base: 1, md: 2 }}
+        marginTop={{ base: 10, md: 10 }}
+      >
+        <InputGroup>
+          <Input
+            type="text"
+            placeholder="Área de reporte"
+            variant="filled"
+            value={searchTerm}
+            onChange={handleInputChange}
+          />
+          <InputRightAddon p={5} border="none">
+            <SearchIcon />
+          </InputRightAddon>
+        </InputGroup>
+        
+      
+
+      {/* Display filtered results */}
+      {filteredList.length > 0 && (
+        <Box bg="white" borderRadius="md" boxShadow="sm" mt={2} maxH="200px" overflowY="auto">
+          <List>
+            {filteredList.map((item, index) => (
+              <ListItem
+                key={index}
+                p={2}
+                borderBottom="1px solid #e2e8f0"
+                cursor="pointer"
+                onClick={() => handleItemSelect(item)}
+                zIndex={5}
+              >
+                <Text>{item.text}</Text>
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+      )}
+      </GridItem>
 
           <GridItem w="100%" h="1" color={"black"} colSpan={{ base: 1, md: 1 }}>
             <CustomSelect
@@ -227,6 +301,7 @@ function QuestionForm() {
             h="20"
             color={"black"}
             colSpan={{ base: 1, md: 2 }}
+            zIndex={1}
           >
             <Input
               placeholder="Ejemplo: Teclado KU-0138"
@@ -235,7 +310,8 @@ function QuestionForm() {
               name="descripcionEquipo"
               value={formData.descripcionEquipo}
               isDisabled={formData.tipoEquipo !== "Otro"}
-              onChange={handleInputChange}
+              onChange={handleNormalInputChange}
+              
             />
           </GridItem>
 
@@ -261,7 +337,7 @@ function QuestionForm() {
               height="300px"
               name="motivoReporte"
               value={formData.motivoReporte}
-              onChange={handleInputChange}
+              onChange={handleNormalInputChange}
             />
           </GridItem>
 
