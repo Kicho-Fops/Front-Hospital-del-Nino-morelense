@@ -258,7 +258,7 @@ function QuestionForm() {
 
       {/* Display filtered results */}
       {filteredList.length > 0 && (
-        <Box bg="white" borderRadius="md" boxShadow="sm" mt={2} maxH="200px" overflowY="auto">
+        <Box bg="white" borderRadius="md" boxShadow="sm" mt={2} maxH="105px" overflowY="auto">
           <List>
             {filteredList.map((item, index) => (
               <ListItem
@@ -277,7 +277,7 @@ function QuestionForm() {
       )}
       </GridItem>
 
-          <GridItem w="100%" h="1" color={"black"} colSpan={{ base: 1, md: 1 }}>
+          <GridItem w="100%" h="1" color={"black"} colSpan={{ base: 1, md: 1 }} marginTop={{ base: 20, md: 0 }}>
             <CustomSelect
               placeholder={"Tipo de equipo a revisar"}
               variant={"filled"}
