@@ -32,7 +32,7 @@ function MainPage() {
         </GridItem> */}
 
 
-        <Text color="black" style={{ textAlign: "center" }} fontSize="4xl">
+        <Text color="black" style={{ textAlign: "center" }} fontSize="4xl" mt="30px">
           Sistema de levantamiento de tickets
         </Text>
       </Grid>
