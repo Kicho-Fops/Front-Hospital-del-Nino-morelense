@@ -25,25 +25,37 @@ function MainPage() {
       <Grid
         container
         alignItems="center" // Align items vertically centered
-        justifyContent="center" // Align items horizontally centered
+        justifyContent="center" // Distribute the image and text accordingly
         style={{ minHeight: "5vh" }}
-        templateRows="repeat(1, 1fr)"
+        templateColumns="repeat(1, 1fr)"
       >
+        {/* Image on the left */}
         <GridItem
-          w="100%"
-          h="0"
+          w="10%"
+          h="auto"
           color="black"
           colSpan={{ base: 1, md: 1 }}
           display="flex"
-          justifyContent="center" // Center the image horizontally
+          justifyContent="left" // Align the image to the left
+          alignItems={"left"} // Align the image vertically centered
         >
           <Image src={Logo} h={50} w={70} />
         </GridItem>
 
-        <GridItem marginTop={50}>
-        <Text color="black" textAlign="center" fontSize="4xl" >
-          Sistema de levantamiento de tickets
-        </Text>
+        {/* Text in the center */}
+        <GridItem
+          w="90%"
+          h="auto"
+          color="black"
+          colSpan={{ base: 1, md: 1 }}
+          display="flex"
+          justifyContent="center" // Center the text horizontally
+          alignContent={"center"} // Center the text verticallyq
+          alignItems={"center"} // Center the text verticallyq
+        >
+          <Text color="black" textAlign="center" fontSize="4xl">
+            Sistema de levantamiento de tickets
+          </Text>
         </GridItem>
       </Grid>
 
