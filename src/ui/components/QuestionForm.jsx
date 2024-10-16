@@ -98,7 +98,7 @@ function QuestionForm() {
 
     
     fetch(
-      `http://192.168.1.200:8080/api/ticket/public/create`,
+      `http://hosp-nino.servidoreselruso.com:8080/api/ticket/public/create`,
       {
         // Cambiamos la URL a donde este la API de prueba
         method: "POST",
@@ -289,7 +289,7 @@ function QuestionForm() {
             zIndex={1}
           >
             <Input
-              placeholder='Opción hábil cuando se selecciona "Otro"'
+              placeholder='Opción habilitada cuando se selecciona "Otro"'
               variant="filled"
               marginTop={2}
               name="descripcionEquipo"
@@ -309,7 +309,7 @@ function QuestionForm() {
           >
             <Box display="flex" alignItems="center">
               <Text fontSize="xl" marginLeft={3}>
-                Motivo del reporte
+                Motivo del reporte (Máximo 250 caracteres)
               </Text>
               <Text color={"red"} fontSize="2xl">
                 *
