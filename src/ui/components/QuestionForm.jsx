@@ -321,7 +321,7 @@ function QuestionForm() {
             zIndex={1}
           >
             <Input
-              placeholder="Ejemplo: Teclado KU-0138"
+              placeholder='Opción hábil cuando se selecciona "Otro"'
               variant="filled"
               marginTop={2}
               name="descripcionEquipo"
