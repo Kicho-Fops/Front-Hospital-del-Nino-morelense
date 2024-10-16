@@ -8,11 +8,9 @@ import {
   Button,
   useToast,
   InputGroup,
-  InputLeftElement,
   InputRightAddon,
   List,
   ListItem,
-  Icon, // Importamos useToast
 } from "@chakra-ui/react";
 import { useState } from "react";
 import CustomTextBox from "./CustomTextBox";
@@ -21,7 +19,6 @@ import {
   ConfirmationDialog,
 } from "./ConfirmationDialog"; // Importamos ambos
 import CustomSelect from "./CustomSelect";
-import CustomSearch from "./CustomSearch";
 import { LISTA_COMBINADA } from "../providers/listProvider";
 import { SearchIcon } from "@chakra-ui/icons";
 
@@ -178,34 +175,6 @@ function QuestionForm() {
   };
 
 
-
-  const handleSearchChangeArea = (event) => {
-    const { value } = event.target.value; // This is the selected position
-    console.log(value);
-
-    setSelectedValue(value); // Update the selected value
-
-    // Find the corresponding value based on selected text
-    const foundItem = LISTA_COMBINADA.find((item) => item.text === value);
-
-    console.log(foundItem);
-
-    // If found, extract the number and update formData
-    if (foundItem) {
-      const [area, extension] = foundItem.value.split(" - "); // Separate into area and extension
-      setFormData((prevData) => ({
-        ...prevData,
-        areaReporte: area, // Store the area
-        extension: extension, // Store the extension
-      }));
-    } else {
-      // Optionally handle the case where the item is not found
-      setFormData((prevData) => ({
-        ...prevData,
-        selectedValue: "", // Clear the value if not found
-      }));
-    }
-  };
 
   const isFormComplete =
     formData.quienReporta.trim() !== "" &&
