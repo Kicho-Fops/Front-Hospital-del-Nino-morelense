@@ -98,7 +98,7 @@ function QuestionForm() {
 
     
     fetch(
-      `http://hosp-nino.servidoreselruso.com:8080/api/ticket/public/create`,
+      `http://192.168.1.200:8080/api/ticket/public/create`,
       {
         // Cambiamos la URL a donde este la API de prueba
         method: "POST",
@@ -173,7 +173,6 @@ function QuestionForm() {
       descripcionEquipo: value !== "Otro" ? "" : prevData.descripcionEquipo,
     }));
   };
-
 
 
   const isFormComplete =
