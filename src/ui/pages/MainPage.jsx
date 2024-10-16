@@ -39,9 +39,7 @@ function MainPage() {
         >
           <Image src={Logo} h={50} w={70} />
         </GridItem>
-
-        <GridItem marginTop={50}>
-        <Text color="black" textAlign="center" fontSize="4xl" >
+        <Text color="black" style={{ textAlign: "center" }} fontSize="4xl" mt="30px">
           Sistema de levantamiento de tickets
         </Text>
         </GridItem>

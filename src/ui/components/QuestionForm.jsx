@@ -36,6 +36,19 @@ function QuestionForm() {
   const { isOpen, openDialog, closeDialog } = useConfirmationDialog(); // Usamos el hook
   const toast = useToast(); // Inicializamos el hook de useToast
 
+  // Function to reset the form
+  const resetForm = () => {
+    setFormData({
+      quienReporta: "",
+      areaReporte: "",
+      extension: "",
+      tipoEquipo: "",
+      descripcionEquipo: "",
+      motivoReporte: "",
+    });
+    setSearchTerm(""); 
+    setFilteredList([]); 
+  };
 
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredList, setFilteredList] = useState([]);
@@ -121,6 +134,9 @@ function QuestionForm() {
             marginTop: "300px", // Ajusta el margen superior con px
           },
         });
+
+        resetForm();
+
       })
       .catch(() => {
         // Handle errors if the request fails
@@ -185,6 +201,7 @@ function QuestionForm() {
         margin="auto"
         boxShadow="inset 0 5px 4px rgba(0.1, 0.1, 0.1, 0.3)"
         padding={10}
+        marginTop="20px"
       >
         <Grid
           templateColumns={{ base: "1fr", md: "repeat(3, 2fr)" }} // Stack items in 1 column on mobile, grid with 3 columns on larger screens
@@ -273,7 +290,7 @@ function QuestionForm() {
             zIndex={1}
           >
             <Input
-              placeholder="Ejemplo: Teclado KU-0138"
+              placeholder='Opción hábil cuando se selecciona "Otro"'
               variant="filled"
               marginTop={2}
               name="descripcionEquipo"
