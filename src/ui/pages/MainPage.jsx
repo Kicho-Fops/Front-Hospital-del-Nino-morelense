@@ -27,6 +27,7 @@ function MainPage() {
         justifyContent="center" // Distribute the image and text accordingly
         style={{ minHeight: "5vh" }}
         templateColumns="repeat(1, 1fr)"
+        gap={6}
       >
         {/* Image on the left */}
         <GridItem
@@ -35,10 +36,10 @@ function MainPage() {
           color="black"
           colSpan={{ base: 1, md: 1 }}
           display="flex"
-          justifyContent="left" // Align the image to the left
-          alignItems={"left"} // Align the image vertically centered
+          justifyContent="center" // Align the image to the left
+          alignItems={"center"} // Align the image vertically centered
         >
-          <Image src={Logo} h={50} w={70} />
+          <Image src={Logo} h={100} w={120} />
         </GridItem>
 
         {/* Text in the center */}
@@ -51,6 +52,7 @@ function MainPage() {
           justifyContent="center" // Center the text horizontally
           alignContent={"center"} // Center the text verticallyq
           alignItems={"center"} // Center the text verticallyq
+          ml={4}
         >
           <Text color="black" textAlign="center" fontSize="4xl">
             Sistema de levantamiento de tickets

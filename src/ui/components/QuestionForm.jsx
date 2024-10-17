@@ -309,7 +309,7 @@ function QuestionForm() {
           >
             <Box display="flex" alignItems="center">
               <Text fontSize="xl" marginLeft={3}>
-                Motivo del reporte (Máximo 250 caracteres)
+                Motivo (sea breve solo tiene 250 caracteres)
               </Text>
               <Text color={"red"} fontSize="2xl">
                 *
